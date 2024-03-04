@@ -1,69 +1,65 @@
+// userRoutes.js
+
 const router = require('express').Router();
 const { User } = require('../../models');
+const bcrypt = require('bcrypt');
 
-// Render the signup form
-router.get('/signup', (req, res) => {
-  res.render('signupPartial', { title: 'Signup', signupPage: true });
-});
-
-// Handle user signup
+// Route to create a new user (signup)
 router.post('/signup', async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+    const userData = await User.create({
+      username: req.body.username,
+      password: await bcrypt.hash(req.body.password, 10), // Hash the password before storing
+    });
+
+    // Set the user session data
     req.session.save(() => {
-      req.session.userId = userData.id;
+      req.session.user_id = userData.id;
+      req.session.username = userData.username;
       req.session.logged_in = true;
-      res.status(200).json(userData);
+
+      res.status(201).json({ user: userData, message: 'Signup successful' });
     });
   } catch (err) {
-    res.status(400).json(err);
+    console.error(err);
+    res.status(500).json(err);
   }
 });
 
-// Render the login form
-router.get('/login', (req, res) => {
-  res.render('loginPartial', { title: 'Login', loginPage: true });
-});
-
-// Handle user login
+// Route for user login
 router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({
       where: { username: req.body.username },
     });
 
-    if (!userData) {
-      return res.status(400).json({
-        message: 'Incorrect username or password, please try again',
-      });
+    if (!userData || !(await bcrypt.compare(req.body.password, userData.password))) {
+      res.status(400).json({ message: 'Incorrect username or password' });
+      return;
     }
 
-    const validPassword = await userData.checkPassword(req.body.password);
-
-    if (!validPassword) {
-      return res.status(400).json({
-        message: 'Incorrect username or password, please try again',
-      });
-    }
-
+    // Set the user session data
     req.session.save(() => {
-      req.session.userId = userData.id;
+      req.session.user_id = userData.id;
+      req.session.username = userData.username;
       req.session.logged_in = true;
-      res.json({ user: userData, message: 'You are now logged in!' });
+
+      res.status(200).json({ user: userData, message: 'Login successful' });
     });
   } catch (err) {
-    res.status(400).json(err);
+    console.error(err);
+    res.status(500).json(err);
   }
 });
 
-// Handle user logout
+// Route for user logout
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
-      res.redirect('/');
+      res.status(204).end();
     });
   } else {
-    res.status(404).end();
+    res.status(404).json({ message: 'No user to log out' });
   }
 });
 

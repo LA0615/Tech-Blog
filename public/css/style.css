@@ -3,46 +3,119 @@ body {
   background-color: lightgoldenrodyellow;
 }
 
-nav, h1 {
-  background-color: lightslategray; 
+nav,
+h1 {
+  background-color: lightslategray;
   padding: 15px;
   margin: 0;
   box-sizing: border-box;
 }
 
 nav a {
-  color: white; 
-  font-weight: bold; 
+  color: white;
+  font-weight: bold;
   margin-right: 15px;
-  text-decoration: none; 
+  text-decoration: none;
   font-size: 20px;
 }
 
 h1 {
-  color: white; 
-  font-weight: bold; 
-  margin: 0; 
+  color: white;
+  font-weight: bold;
+  margin: 0;
   text-align: center;
   font-size: 48px;
   padding-left: 15px;
 }
 
 #logout-btn {
-  font-size: 30px; 
-  padding: 10px 20px; 
+  font-size: 30px;
+  padding: 10px 20px;
 }
 
 main {
   padding: 20px 0;
 }
 
+.post-container {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 5px solid black;
+}
 
+.post-title {
+  padding: 20px 10px;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.post-title h1 {
+  margin: 0;
+  color: black;
+}
+
+.post-box {
+  border: 5px solid black;
+  padding: 10px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.post-box h2 {
+  color: #333;
+  font-size: 30px;
+  background-color: lightgray;
+  margin: 0; 
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  width: 40%;
+  padding: 10px; 
+  box-sizing: border-box; 
+  text-align: center;
+}
+
+.post-box p {
+  margin-bottom: 5px;
+  font-style: italic;
+  padding-top: 60px;
+  font-size: 20px;
+}
+
+.post-box a {
+  text-decoration: none;
+  color: #007BFF;
+}
+
+.post-box a:hover {
+  text-decoration: underline;
+}
+
+.comments-section {
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.comments-section h2 {
+  color: #333;
+  font-size: 16px;
+}
+
+.comments-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.comments-section li {
+  margin-bottom: 8px;
+}
 
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; 
+  height: 100vh;
 }
 
 .login-box {
@@ -50,7 +123,7 @@ main {
   padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px; 
+  max-width: 400px;
   width: 100%;
 }
 

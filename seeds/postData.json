@@ -7,7 +7,7 @@
   },
   {
     "title": "Authentication vs. Authorization",
-    "content": "There is a difference between autehntication and authorization. Authentication means confirming your own identity, whereas authorization means being allowed access to the system.",
+    "content": "There is a difference between authentication and authorization. Authentication means confirming your own identity, whereas authorization means being allowed access to the system.",
     "date_created": "2022-02-23 21:45:00",
     "username": "WillyWonka"
   },

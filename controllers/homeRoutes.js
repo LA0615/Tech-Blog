@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
     // Render the homepage view
     res.render('homepage', {
       posts,
-      logged_in: logged_in,
+      logged_in: logged_in
     });
   } catch (err) {
     console.error('Error in home route:', err);

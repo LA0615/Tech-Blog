@@ -1,27 +1,39 @@
+
+
 <!-- views/post.handlebars -->
 
-<h1>{{post.title}}</h1>
-<p>Written by {{post.User.username}} on {{post.formattedDate}}</p>
-<div>{{post.content}}</div>
+<div class="post-container">
+  <div class="post-box">
+    <div class="post-title">
+      <h1>{{post.title}}</h1>
+    </div>
+    <p>Written by {{post.User.username}} on {{post.formattedDate}}</p>
+    <article>{{post.content}}</article>
+  </div>
+</div>
 
-<!-- Add the option to leave a comment here if needed -->
-{{#if logged_in}}
-  <form action="/api/comments" method="post">
-    <input type="hidden" name="post_id" value="{{post.id}}">
-    <label for="comment-text">Leave a Comment:</label>
-    <textarea id="comment-text" name="comment_text" rows="4" cols="50" required></textarea>
-    <button type="submit">Submit Comment</button>
-  </form>
-{{else}}
-  <p>Login to leave a comment</p>
-{{/if}}
 
-<!-- Display existing comments if available -->
-{{#if post.Comments.length}}
-  <h2>Comments:</h2>
-  <ul>
-    {{#each post.Comments}}
-      <li>{{this.comment_text}} - {{this.User.username}}</li>
-    {{/each}}
-  </ul>
-{{/if}}
+  <!-- Add the option to leave a comment here if needed -->
+  {{#if logged_in}}
+    <form action="/api/comments" method="post">
+      <input type="hidden" name="post_id" value="{{post.id}}">
+      <label for="comment-text">Leave a Comment:</label>
+      <textarea id="comment-text" name="comment_text" rows="4" cols="50" required></textarea>
+      <button type="submit">Submit Comment</button>
+    </form>
+  {{else}}
+    <p>Login to leave a comment</p>
+  {{/if}}
+
+  <!-- Display existing comments if available -->
+  {{#if post.Comments.length}}
+    <div class="comments-section">
+      <h2>Comments:</h2>
+      <ul>
+        {{#each post.Comments}}
+          <li>{{this.comment_text}} - {{this.User.username}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+</div>

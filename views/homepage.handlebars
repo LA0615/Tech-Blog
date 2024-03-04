@@ -10,7 +10,7 @@
     <a href="/login">Login</a>
   {{/if}}
 
-  {{#each posts}}
+  {{!-- {{#each posts}}
     <div>
       <h2>{{title}}</h2>
       <p>{{content}}</p>
@@ -18,5 +18,24 @@
       <a href="/post/{{id}}">Read More</a>
     </div>
   {{/each}}
-</div>
+</div> --}}
 
+{{#each posts}}
+  <div class="post-box">
+    <h2>{{title}}</h2>
+    <p>{{content}}</p>
+    <p>Created by {{createdBy}} on {{formattedDate}}</p>
+    <a href="/post/{{id}}">Read More</a>
+    <!-- Add the comments section here if needed -->
+    {{#if Comments.length}}
+      <div class="comments-section">
+        <h2>Comments:</h2>
+        <ul>
+          {{#each Comments}}
+            <li>{{this.comment_text}} - {{this.User.username}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
+  </div>
+{{/each}}

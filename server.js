@@ -4,6 +4,7 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const routes = require('./controllers');
 const userRoutes = require('./controllers/api/userRoutes');
+const postRoutes = require('./controllers/api/postRoutes');
 const helpers = require('./utils/helpers');
 require('dotenv').config();
 
@@ -29,8 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Include your routes
 app.use('/', routes);
 app.use('/api/users', userRoutes);
-
-
+//app.use('/api/posts', postRoutes);
 
 // Session middleware
 const sess = {

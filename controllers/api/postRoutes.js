@@ -1,10 +1,11 @@
+// controllers/api/postRoutes.js
 const router = require('express').Router();
-const { Post, User } = require('../models');
-const helpers = require('../utils/helpers');
+const { Post, User } = require('../../models');
+const helpers = require('../../utils/helpers');
 
-router.get('/post/:id', async (req, res) => {
+router.get('/:postId', async (req, res) => {
   try {
-    const postId = req.params.id;
+    const postId = req.params.postId;
     const postData = await Post.findByPk(postId, {
       include: {
         model: User,
@@ -17,7 +18,9 @@ router.get('/post/:id', async (req, res) => {
     }
 
     const formattedPost = postData.get({ plain: true });
-    formattedPost.createdBy = formattedPost.User ? formattedPost.User.username : 'Unknown';
+    formattedPost.createdBy = formattedPost.User
+      ? formattedPost.User.username
+      : 'Unknown';
     formattedPost.formattedDate = helpers.format_date(formattedPost.createdAt);
 
     res.render('postDetails', {
