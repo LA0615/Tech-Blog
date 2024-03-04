@@ -1,13 +1,23 @@
-<!-- Loop over each object in the projects array -->
-{{#each posts as |post| }}
-<div class="row mb-4">
-  <div class="col-md-5">
-    <h2>
-        {{post.title}}
-      <a href="/post/{{post.id}}">{{post.title}}</a>
-    </h2>
-    <p>Created by {{post.username}} on {{format_date post.date_created}}</p>
-  </div>
 
+<!-- views/homepage.handlebars -->
+
+<h1>The Tech Blog</h1>
+
+{{!-- Display Blog Posts --}}
+<div>
+  {{#if logged_in}}
+    <a href="/logout">Logout</a>
+    {{!-- Add other options for logged-in users --}}
+  {{else}}
+    <a href="/login">Login</a>
+    {{!-- Add other options for non-logged-in users --}}
+  {{/if}}
+
+  {{#each posts}}
+    <div>
+      <h2>{{title}}</h2>
+      <p>{{content}}</p>
+      <p>Created by {{createdBy}} on {{formattedDate}}</p>
+    </div>
+  {{/each}}
 </div>
-{{/each}}

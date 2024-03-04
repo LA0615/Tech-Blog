@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const User = require('./User');
 
 class Post extends Model {}
 
@@ -19,16 +20,12 @@ Post.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    date_created: {
+    createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'user',
@@ -45,4 +42,11 @@ Post.init(
   },
 );
 
+// Associate Post with User
+// Post.belongsTo(User, {
+//   foreignKey: 'userId',
+// });
+
 module.exports = Post;
+
+

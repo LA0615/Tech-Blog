@@ -1,7 +1,23 @@
 //Format Date function
+//module.exports = {
+//   format_date: (date) => {
+//     // Format date as MM/DD/YYYY
+//     return date.toLocaleDateString();
+//   },
+// };
+// Format Date function
+// Format Date function
+// helpers.js
 module.exports = {
   format_date: (date) => {
-    // Format date as MM/DD/YYYY
-    return date.toLocaleDateString();
+    // Check if date is defined
+    if (date) {
+      // Format date as MM/DD/YYYY
+      return date.toLocaleDateString();
+    }
+    // If date is undefined, return an empty string or another default value
+    return '';
   },
 };
+
+

@@ -19,12 +19,12 @@ Comment.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    date_created: {
+    createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'user',
