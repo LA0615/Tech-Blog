@@ -42,10 +42,6 @@ Post.init(
   },
 );
 
-// Associate Post with User
-// Post.belongsTo(User, {
-//   foreignKey: 'userId',
-// });
 
 module.exports = Post;
 

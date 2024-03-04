@@ -16,6 +16,23 @@ const PORT = process.env.PORT || 3001;
 // Set up Handlebars.js engine with custom helpers
 const hbs = exphbs.create({ helpers });
 
+// Inform Express.js on which template engine to use
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
+// Parse incoming JSON and URL-encoded payloads
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Include your routes
+app.use('/', routes);
+app.use('/api/users', userRoutes);
+
+
+
+// Session middleware
 const sess = {
   secret: process.env.SECRET,
   cookie: {
@@ -32,20 +49,6 @@ const sess = {
 };
 
 app.use(session(sess));
-
-// Inform Express.js on which template engine to use
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-
-// Parse incoming JSON and URL-encoded payloads
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Include your userRoutes
-app.use(routes);
-app.use(userRoutes);
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));

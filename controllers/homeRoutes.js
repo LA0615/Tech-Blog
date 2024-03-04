@@ -20,11 +20,12 @@ router.get('/', async (req, res) => {
       formattedPost.formattedDate = helpers.format_date(formattedPost.createdAt);
       return formattedPost;
     });
+    const logged_in = req.session && req.session.logged_in;
 
     // Render the homepage view
     res.render('homepage', {
       posts,
-      logged_in: req.session.logged_in,
+      logged_in: logged_in,
     });
   } catch (err) {
     console.error('Error in home route:', err);

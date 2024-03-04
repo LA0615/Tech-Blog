@@ -1,35 +1,31 @@
 const router = require('express').Router();
-const { Post } = require('../../models');
-const withAuth = require('../../utils/auth');
+const { Post, User } = require('../models');
+const helpers = require('../utils/helpers');
 
-// Create a new post
-router.post('/', withAuth, async (req, res) => {
+router.get('/post/:id', async (req, res) => {
   try {
-    const newPost = await Post.create({
-      ...req.body,
-      userId: req.session.userId,
+    const postId = req.params.id;
+    const postData = await Post.findByPk(postId, {
+      include: {
+        model: User,
+        attributes: ['username'],
+      },
     });
 
-    res.status(200).json(newPost);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// Delete a post by ID
-router.delete('/:id', withAuth, async (req, res) => {
-  try {
-    const postData = await Post.findByPk(req.params.id);
-
     if (!postData) {
-      res.status(404).json({ message: 'No post found with this id!' });
-      return;
+      return res.status(404).json({ message: 'Blog post not found' });
     }
 
-    await postData.destroy();
+    const formattedPost = postData.get({ plain: true });
+    formattedPost.createdBy = formattedPost.User ? formattedPost.User.username : 'Unknown';
+    formattedPost.formattedDate = helpers.format_date(formattedPost.createdAt);
 
-    res.status(200).json(postData);
+    res.render('postDetails', {
+      post: formattedPost,
+      logged_in: req.session.logged_in,
+    });
   } catch (err) {
+    console.error('Error in post route:', err);
     res.status(500).json(err);
   }
 });

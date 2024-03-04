@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
-// Render the login page
-router.get('/login', (req, res) => {
-  res.render('main', { title: 'Login', loginPage: true });
+// Render the signup form
+router.get('/signup', (req, res) => {
+  res.render('signupPartial', { title: 'Signup', signupPage: true });
 });
 
-// Handle user registration
-router.post('/', async (req, res) => {
+// Handle user signup
+router.post('/signup', async (req, res) => {
   try {
     const userData = await User.create(req.body);
     req.session.save(() => {
@@ -18,6 +18,11 @@ router.post('/', async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
+});
+
+// Render the login form
+router.get('/login', (req, res) => {
+  res.render('loginPartial', { title: 'Login', loginPage: true });
 });
 
 // Handle user login
@@ -60,11 +65,6 @@ router.post('/logout', (req, res) => {
   } else {
     res.status(404).end();
   }
-});
-
-// Render the signup page
-router.get('/signup', (req, res) => {
-  res.render('main', { title: 'Signup', signupPage: true });
 });
 
 module.exports = router;

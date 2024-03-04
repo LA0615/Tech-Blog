@@ -1,4 +1,4 @@
-<!-- signupPartial.handlebars -->
+{{!-- <!-- signupPartial.handlebars -->
 <div class="signup-container" id="signup-container">
   <div class="signup-box">
     <h2>Sign Up</h2>
@@ -14,5 +14,22 @@
 
     <p>Already have an account? <a href="#" id="login-link">Log in instead</a></p>
   </div>
-</div>
+</div> --}}
+
+
+<!-- views/signup.handlebars -->
+
+<h1>Sign Up</h1>
+
+<form action="/api/users/signup" method="post">
+  <label for="signup-username">Username</label>
+  <input type="text" id="signup-username" name="username" required>
+  
+  <label for="signup-password">Password</label>
+  <input type="password" id="signup-password" name="password" required>
+
+  <input type="submit" value="Sign Up">
+</form>
+
+<p>Already have an account? <a href="/login">Log in instead</a></p>
 

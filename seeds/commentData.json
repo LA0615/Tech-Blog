@@ -2,7 +2,19 @@
   {
   "postId": 1,
   "text": "This is a comment",
-  "username": "john_doe",
+  "username": "TechGirl",
+  "description": "This is the description"
+},
+{
+  "postId": 2,
+  "text": "This is a comment",
+  "username": "WilyWonka",
+  "description": "This is the description"
+},
+{
+  "postId": 3,
+  "text": "This is a comment",
+  "username": "SQLstar",
   "description": "This is the description"
 }
 ]

@@ -20,6 +20,11 @@ Post.belongsTo(User, {
   onDelete: 'CASCADE',
 });
 
+// models/Post.js
+Post.hasMany(Comment, {
+  foreignKey: 'post_id',
+});
+
 // In the Comment model
 Comment.belongsTo(User, {
   foreignKey: 'userId',
@@ -27,3 +32,4 @@ Comment.belongsTo(User, {
 });
 
 module.exports = { User, Post, Comment };
+

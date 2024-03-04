@@ -24,7 +24,7 @@ const seedDatabase = async () => {
 
       for (const comment of postComments) {
         await Comment.create({
-          text: comment.text,
+          comment_text: comment.comment_text, // Corrected attribute name
           username: comment.username,
           description: comment.description,
           userId: user.id,
@@ -42,4 +42,3 @@ const seedDatabase = async () => {
 };
 
 seedDatabase();
-

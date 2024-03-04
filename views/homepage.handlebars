@@ -1,4 +1,3 @@
-
 <!-- views/homepage.handlebars -->
 
 <h1>The Tech Blog</h1>
@@ -7,10 +6,8 @@
 <div>
   {{#if logged_in}}
     <a href="/logout">Logout</a>
-    {{!-- Add other options for logged-in users --}}
   {{else}}
     <a href="/login">Login</a>
-    {{!-- Add other options for non-logged-in users --}}
   {{/if}}
 
   {{#each posts}}
@@ -18,6 +15,8 @@
       <h2>{{title}}</h2>
       <p>{{content}}</p>
       <p>Created by {{createdBy}} on {{formattedDate}}</p>
+      <a href="/post/{{id}}">Read More</a>
     </div>
   {{/each}}
 </div>
+
