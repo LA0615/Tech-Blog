@@ -26,7 +26,7 @@ User.init(
       allowNull: false,
       validate: {
         len: {
-          args: [6, 20], // Set a min and max password length
+          args: [6, 60], // Set a min and max password length
           msg: 'Password must be between 6 and 20 characters long.',
         },
       },

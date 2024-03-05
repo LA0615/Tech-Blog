@@ -1,11 +1,7 @@
-
-
 // userRoutes.js
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
 const router = require('express').Router();
-
-
 
 // Route to create a new user (signup)
 router.post('/signup', async (req, res) => {
@@ -21,7 +17,8 @@ router.post('/signup', async (req, res) => {
       req.session.username = userData.username;
       req.session.logged_in = true;
 
-      res.status(201).json({ user: userData, message: 'Signup successful' });
+      // Redirect the user to the dashboard page after they sign up
+      res.redirect('/dashboard');
     });
   } catch (err) {
     console.error(err);

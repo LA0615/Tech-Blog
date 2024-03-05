@@ -33,6 +33,10 @@ h1 {
   padding: 10px 20px;
 }
 
+#logout-btn:hover {
+  cursor: pointer;
+}
+
 main {
   padding: 20px 0;
 }
@@ -65,13 +69,13 @@ main {
   color: #333;
   font-size: 30px;
   background-color: lightgray;
-  margin: 0; 
+  margin: 0;
   position: absolute;
-  top: 0; 
-  left: 0; 
+  top: 0;
+  left: 0;
   width: 40%;
-  padding: 10px; 
-  box-sizing: border-box; 
+  padding: 10px;
+  box-sizing: border-box;
   text-align: center;
 }
 
@@ -145,4 +149,27 @@ input[type="submit"] {
   background-color: #4caf50;
   color: #fff;
   cursor: pointer;
+}   
+
+#create-post-form {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border: 30px solid black;
+}
+
+#post-title {
+  border-bottom: 1px solid #ddd; 
+  margin-bottom: 15px;
+  font-size: 20px ;
+  font-weight: bold;
+}
+
+
+#post-title,
+#post-content {
+  width: 100%; 
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
 }

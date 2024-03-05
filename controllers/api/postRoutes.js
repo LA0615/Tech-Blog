@@ -1,36 +1,28 @@
-// controllers/api/postRoutes.js
 const router = require('express').Router();
-const { Post, User } = require('../../models');
-const helpers = require('../../utils/helpers');
+const { Post } = require('../../models');
+const withAuth = require('../../utils/auth');
+router.post('/posts', withAuth, async (req, res) => {
+  try {
+    // Logic to create a new post based on the data received in the request body
+    const newPost = await Post.create({
+      title: req.body.title,
+      content: req.body.content,
+      User_id: req.session.user_id,
+    });
 
-// router.get('/:postId', async (req, res) => {
-//   try {
-//     const postId = req.params.postId;
-//     const postData = await Post.findByPk(postId, {
-//       include: {
-//         model: User,
-//         attributes: ['username'],
-//       },
-//     });
-
-//     if (!postData) {
-//       return res.status(404).json({ message: 'Blog post not found' });
-//     }
-
-//     const formattedPost = postData.get({ plain: true });
-//     formattedPost.createdBy = formattedPost.User
-//       ? formattedPost.User.username
-//       : 'Unknown';
-//     formattedPost.formattedDate = helpers.format_date(formattedPost.createdAt);
-
-//     res.render('post', {
-//       post: formattedPost,
-//       logged_in: req.session.logged_in,
-//     });
-//   } catch (err) {
-//     console.error('Error in post route:', err);
-//     res.status(500).json(err);
-//   }
-// });
-
+    res.status(200).json(newPost);
+  } catch (err) {
+    console.error('Error creating a new post:', err);
+    res.status(500).json(err);
+  }
+});
 module.exports = router;
+
+
+// // Route to handle submission of a new post
+// router.post('/newpost', (req, res) => {
+//   // Logic to handle the submission of a new post
+//   const { title, content } = req.body;
+//   // Process the new post data (e.g., save to a database)
+//   res.send('New post created successfully');
+// });
