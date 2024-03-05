@@ -4,28 +4,16 @@
 
 {{!-- Display Blog Posts --}}
 <div>
-  {{#if logged_in}}
-    <a href="/logout">Logout</a>
-  {{else}}
-    <a href="/login">Login</a>
-  {{/if}}
 
-  {{!-- {{#each posts}}
-    <div>
-      <h2>{{title}}</h2>
-      <p>{{content}}</p>
-      <p>Created by {{createdBy}} on {{formattedDate}}</p>
-      <a href="/post/{{id}}">Read More</a>
-    </div>
-  {{/each}}
-</div> --}}
+
+
 
 {{#each posts}}
   <div class="post-box">
     <h2>{{title}}</h2>
     <p>{{content}}</p>
     <p>Created by {{createdBy}} on {{formattedDate}}</p>
-    <a href="/post/{{id}}">Read More</a>
+    <a href="/posts/{{id}}">Read More</a>
     <!-- Add the comments section here if needed -->
     {{#if Comments.length}}
       <div class="comments-section">

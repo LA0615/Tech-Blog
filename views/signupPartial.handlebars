@@ -1,4 +1,4 @@
-<!-- views/signup.handlebars -->
+{{!-- <!-- views/signup.handlebars -->
 
 <h1>Sign Up</h1>
 
@@ -12,4 +12,14 @@
   <input type='submit' value='Sign Up' />
 </form>
 
-<p>Already have an account? <a href='/login'>Log in instead</a></p>
+<p>Already have an account? <a href='/login'>Log in instead</a></p> --}}
+
+<form action='/api/users/signup' method='post'>
+  <label for='signup-username'>Username</label>
+  <input type='text' id='signup-username' name='username' required />
+
+  <label for='signup-password'>Password</label>
+  <input type='password' id='signup-password' name='password' required />
+
+  <input type='submit' value='Sign Up' />
+</form>

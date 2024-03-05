@@ -1,8 +1,11 @@
-// userRoutes.js
 
-const router = require('express').Router();
+
+// userRoutes.js
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
+const router = require('express').Router();
+
+
 
 // Route to create a new user (signup)
 router.post('/signup', async (req, res) => {
@@ -33,7 +36,10 @@ router.post('/login', async (req, res) => {
       where: { username: req.body.username },
     });
 
-    if (!userData || !(await bcrypt.compare(req.body.password, userData.password))) {
+    if (
+      !userData ||
+      !(await bcrypt.compare(req.body.password, userData.password))
+    ) {
       res.status(400).json({ message: 'Incorrect username or password' });
       return;
     }

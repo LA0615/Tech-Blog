@@ -1,15 +1,19 @@
-<!-- dashboard.handlebars -->
-<h1>Welcome to the Dashboard, {{username}}!</h1>
 
-{{#if posts}}
+
+<h1>Welcome to Your Dashboard, {{user.username}}!</h1>
+
+{{#if user.Posts.length}}
   <h2>Your Blog Posts:</h2>
   <ul>
-    {{#each posts}}
+    {{#each user.Posts}}
       <li>
         <a href="/post/{{id}}">{{title}}</a>
+        <p>{{content}}</p>
       </li>
     {{/each}}
   </ul>
 {{else}}
-  <p>You haven't created any blog posts yet.</p>
+  <p>You haven't created any blog posts yet. <a href="/newpost">Create one now</a>!</p>
 {{/if}}
+
+<a href="/newpost">Add a New Blog Post</a>

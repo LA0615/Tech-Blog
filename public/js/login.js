@@ -1,15 +1,10 @@
-document.querySelector('#login-link').addEventListener('click', function () {
-  console.log('Login link clicked');
-  // Add logic for displaying the login box
-  document.getElementById('login-container').style.display = 'block';
-});
 
 const loginFormHandler = async (event) => {
   event.preventDefault();
 
   // Collect values from the login form
-  const username = document.querySelector('#username').value.trim();
-  const password = document.querySelector('#password').value.trim();
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value.trim();
 
   if (username && password) {
     // Send a POST request to the API endpoint
@@ -35,4 +30,4 @@ const loginFormHandler = async (event) => {
 };
 
 // Add event listener for the login form outside the loginFormHandler function
-document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+document.getElementById('login-form').addEventListener('submit', loginFormHandler);

@@ -1,14 +1,19 @@
-const router = require('express').Router();
-
 // Logout route
-router.post('/', (req, res) => {
-  if (req.session.logged_in) {
-    req.session.destroy(() => {
-      res.status(204).end(); // Respond with a success status (204 No Content)
-    });
-  } else {
-    res.status(404).end(); // Respond with a not found status (404 Not Found)
-  }
-});
+const logoutFormHandler = async (event) => {
+  event.preventDefault();
+  const response = await fetch('/api/users/logout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
 
-module.exports = router;
+  if (response.ok) {
+    // If successful, redirect the browser to the homepage
+    document.location.replace('/');
+  } else {
+    // Handle login failure, for example, display an error message
+    const errorData = await response.json();
+    console.error('Login failed:', errorData.message);
+  }
+};
+
+document.getElementById('logout').addEventListener('click', logoutFormHandler);
