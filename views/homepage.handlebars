@@ -1,17 +1,8 @@
-<!-- views/homepage.handlebars -->
-
-<h1>The Tech Blog</h1>
-
-{{!-- Display Blog Posts --}}
-<div>
-
-
 
 
 {{#each posts}}
   <div class="post-box">
     <h2>{{title}}</h2>
-    <p>{{content}}</p>
     <p>Created by {{createdBy}} on {{formattedDate}}</p>
     <a href="/posts/{{id}}">Read More</a>
     <!-- Add the comments section here if needed -->

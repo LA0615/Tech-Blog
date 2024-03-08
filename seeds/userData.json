@@ -2,17 +2,17 @@
   {
     "username": "TechGirl",
     "email": "tech@example.com",
-    "password": "hashedpassword"
+    "password": "password"
   },
   {
     "username": "WillyWonka",
     "email": "Wonka@example.com",
-    "password": "hashedpassword"
+    "password": "password"
   },
   {
-    "username": "SQLstaar",
+    "username": "SQLstar",
     "email": "SQLa@example.com",
-    "password": "hashedpassword"
+    "password": "password"
   }
 ]
 

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, User } = require('../models');
+const { Post, User, Comment } = require('../models');
 const helpers = require('../utils/helpers');
 const withAuth = require('../utils/auth');
 
@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
     // Serialize data for the template
     const posts = postData.map((post) => {
       const formattedPost = post.get({ plain: true });
-      formattedPost.createdBy = formattedPost.User
-        ? formattedPost.User.username
+      formattedPost.createdBy = formattedPost.user
+        ? formattedPost.user.username
         : 'Unknown';
       formattedPost.formattedDate = helpers.format_date(
         formattedPost.createdAt,
@@ -69,25 +69,29 @@ router.get('/dashboard', withAuth, async (req, res) => {
 router.get('/posts/:postId', async (req, res) => {
   try {
     const postId = req.params.postId;
+
     const postData = await Post.findByPk(postId, {
-      include: {
-        model: User,
-        attributes: ['username'],
-      },
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ['username'],
+            },
+          ],
+        },
+      ],
     });
 
-    if (!postData) {
-      return res.status(404).json({ message: 'Blog post not found' });
-    }
-
-    const formattedPost = postData.get({ plain: true });
-    formattedPost.createdBy = formattedPost.User
-      ? formattedPost.User.username
-      : 'Unknown';
-    formattedPost.formattedDate = helpers.format_date(formattedPost.createdAt);
+    const post = postData.get({ plain: true });
 
     res.render('post', {
-      post: formattedPost,
+      post,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -99,6 +103,5 @@ router.get('/posts/:postId', async (req, res) => {
 router.get('/newpost', (req, res) => {
   res.render('dashboard');
 });
-
 
 module.exports = router;

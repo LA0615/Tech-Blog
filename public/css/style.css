@@ -20,7 +20,7 @@ nav a {
 }
 
 h1 {
-  color: white;
+  color: black;
   font-weight: bold;
   margin: 0;
   text-align: center;
@@ -172,4 +172,49 @@ input[type="submit"] {
   width: 100%; 
   border-bottom: 1px solid #ddd;
   margin-bottom: 15px;
+}
+.blog-post {
+  border: 5px solid black;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.blog-post h2 {
+  color: blue;
+  font-size: 40px;
+  text-align: left;
+}
+
+.blog-post p {
+  color: black;
+  font-family:'Times New Roman', Times, serif;
+  font-size: 25px;
+  font-weight: bold;
+}
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
 }

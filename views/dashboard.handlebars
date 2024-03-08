@@ -1,49 +1,42 @@
-<!-- views/dashboard.handlebars -->
 <h1>Welcome to Your Dashboard, {{user.username}}!</h1>
 
-{{#if user.Posts.length}}
-  <h2>Your Blog Posts:</h2>
-  <ul>
-    {{#each user.Posts}}
-      <li>
-        <a href="/post/{{id}}">{{title}}</a>
-        <p>{{content}}</p>
-      </li>
-    {{/each}}
-  </ul>
+{{#if user.posts.length}}
+  {{#each user.posts}}
+    <div class='blog-post'>
+      <h2>{{title}}</h2>
+      <p>{{content}}</p>
+      <button class='edit-post-btn' data-postid='{{id}}'>Edit</button>
+      <button class='delete-post-btn' data-postid='{{id}}'>Delete</button>
+    </div>
+  {{/each}}
 {{else}}
-  <p>You haven't created any blog posts yet. <span id="create-post-text">Create one now!</span></p>
+  <p>You haven't created any blog posts yet.
+    <span id='create-post-text'>Create one now!</span></p>
 {{/if}}
 
-<!-- Button to toggle the visibility of the form -->
-<button id="add-post-btn">Add a New Blog Post</button>
+<!-- Add a modal for updating posts -->
+<div id='update-post-modal' class='modal' style='display: none;'>
+  <div class='modal-content'>
+    <span class='close-btn' id='close-btn'>&times;</span>
+    <form id='update-post-form'>
+      <!-- Your form fields go here -->
+      <label for='update-post-title'>Title:</label>
+      <input type='text' id='update-post-title' name='title' required />
 
-<!-- Form for creating a new post (initially hidden) -->
-<form id="create-post-form" action="/api/posts" method="post" style="display: none;"> 
-  <label for="post-title">Post Title:</label>
-  <input type="text" id="post-title" name="title" required aria-label="Post Title">
+      <label for='update-post-content'>Content:</label>
+      <textarea
+        id='update-post-content'
+        name='content'
+        rows='4'
+        cols='50'
+        required
+      ></textarea>
 
-  <label for="post-content">Post Content:</label>
-  <textarea id="post-content" name="content" rows="4" cols="50" required aria-label="Post Content"></textarea>
+<button type="button" id="save-changes-btn" onclick="saveChanges()">Save Changes</button>
+    </form>
+  </div>
+</div>
 
-  <button type="submit" id="submit-post-btn">Create Post</button>
-</form>
+<script src='/js/dashboard.js'></script>
 
-<!-- JavaScript to toggle form visibility and handle form submission -->
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const addPostBtn = document.getElementById('add-post-btn');
-    const createPostForm = document.getElementById('create-post-form');
-    const submitPostBtn = document.getElementById('submit-post-btn');
-
-    addPostBtn.addEventListener('click', function () {
-      createPostForm.style.display = 'block';
-    });
-
-    submitPostBtn.addEventListener('click', function (event) {
-      // Handle form submission logic here (e.g., send data to the server)
-      // After successful submission, you can redirect the user to the updated dashboard
-      document.location.replace('/updated-dashboard');
-    });
-  });
-</script>
+ 

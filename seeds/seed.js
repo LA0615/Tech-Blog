@@ -24,10 +24,11 @@ const seedDatabase = async () => {
 
       for (const comment of postComments) {
         await Comment.create({
-          comment_text: comment.comment_text, // Corrected attribute name
+          comment_text: comment.comment_text,
           username: comment.username,
           description: comment.description,
-          userId: user.id,
+          //userId: user.id,
+          username: user.username,
           postId: post.id,
         });
       }

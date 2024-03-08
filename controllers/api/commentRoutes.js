@@ -11,6 +11,7 @@ router.post('/', withAuth, async (req, res) => {
       user_id: req.session.user_id,
     });
 
+
     res.status(200).json(newComment);
   } catch (err) {
     console.error(err);
@@ -30,7 +31,7 @@ router.delete('/:id', withAuth, async (req, res) => {
 
     await commentData.destroy();
 
-    res.status(200).json(commentData);
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });

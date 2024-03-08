@@ -15,25 +15,27 @@
 
   <!-- Add the option to leave a comment here if needed -->
   {{#if logged_in}}
-    <form action="/api/comments" method="post">
+    <form id="comment-form" >
       <input type="hidden" name="post_id" value="{{post.id}}">
       <label for="comment-text">Leave a Comment:</label>
       <textarea id="comment-text" name="comment_text" rows="4" cols="50" required></textarea>
-      <button type="submit">Submit Comment</button>
+      <button>Submit Comment</button>
     </form>
   {{else}}
     <p>Login to leave a comment</p>
   {{/if}}
 
   <!-- Display existing comments if available -->
-  {{#if post.Comments.length}}
+  {{#if post.comments.length}}
     <div class="comments-section">
       <h2>Comments:</h2>
       <ul>
-        {{#each post.Comments}}
-          <li>{{this.comment_text}} - {{this.User.username}}</li>
+        {{#each post.comments}}
+          <li>{{this.comment_text}} - {{this.comment.user.username}}</li>
         {{/each}}
       </ul>
     </div>
   {{/if}}
 </div>
+
+<script src="/js/comment.js"></script>
