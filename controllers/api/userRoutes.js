@@ -1,6 +1,5 @@
 // userRoutes.js
 const { User } = require('../../models');
-const bcrypt = require('bcrypt');
 const router = require('express').Router();
 
 // Route to create a new user (signup)
@@ -8,7 +7,7 @@ router.post('/signup', async (req, res) => {
   try {
     const userData = await User.create({
       username: req.body.username,
-      password: await bcrypt.hash(req.body.password, 10), // Hash the password before storing
+      password:req.body.password // Hash the password before storing
     });
 
     // Set the user session data
@@ -29,18 +28,22 @@ router.post('/signup', async (req, res) => {
 // Route for user login
 router.post('/login', async (req, res) => {
   try {
+    console.log(req.body);
     const userData = await User.findOne({
       where: { username: req.body.username },
     });
 
-    if (
-      !userData ||
-      !(await bcrypt.compare(req.body.password, userData.password))
-    ) {
+    if (!userData) {
       res.status(400).json({ message: 'Incorrect username or password' });
       return;
     }
-
+    console.log( userData);
+    const isValid = await userData.checkPassword(req.body.password);
+    console.log('test', isValid);
+    if (!isValid) {
+      res.status(400).json({ message: 'Incorrect username or password' });
+      return;
+    }
     // Set the user session data
     req.session.save(() => {
       req.session.user_id = userData.id;

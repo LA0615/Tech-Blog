@@ -1,3 +1,61 @@
+const saveChanges = async (event) => {
+  event.preventDefault();
+
+  // Collect values from the login form
+  const title = document.getElementById('post-title').value.trim();
+  const content = document.getElementById('post-content').value.trim();
+
+  if (title && content) {
+    // Send a POST request to the API endpoint
+    try {
+      const response = await fetch('/api/post', {
+        method: 'POST',
+        body: JSON.stringify({ title, content }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        // If successful, redirect the browser to the homepage
+        document.location.replace('/');
+      } else {
+        // Handle login failure, for example, display an error message
+        const errorData = await response.json();
+        console.error('Login failed:', errorData.message);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  }
+};
+const addPostHandler = async (event) => {
+  event.preventDefault();
+
+  // Collect values from the login form
+  const title = document.getElementById('update-post-title').value.trim();
+  const content = document.getElementById('update-post-content').value.trim();
+
+  if (title && content) {
+    // Send a POST request to the API endpoint
+    try {
+      const response = await fetch('/api/posts', {
+        method: 'POST',
+        body: JSON.stringify({ title, content }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        // If successful, redirect the browser to the homepage
+        document.location.replace('/');
+      } else {
+        // Handle login failure, for example, display an error message
+        const errorData = await response.json();
+        console.error('Login failed:', errorData.message);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  }
+};
 document.addEventListener('DOMContentLoaded', function () {
   const updatePostModal = document.getElementById('update-post-modal');
   const saveChangesBtn = document.getElementById('save-changes-btn');
@@ -14,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Show the modal
     updatePostModal.style.display = 'block';
+    saveChangesBtn.onclick = addPostHandler;
   }
 
   function closeModal() {
@@ -45,8 +104,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Handle Save Changes button click
   saveChangesBtn.addEventListener('click', function () {
-
     // After saving, hide the modal
     closeModal();
   });
+
+ 
+  document
+    .getElementById('create-post-text')
+    .addEventListener('click', function () {
+      openModal({ title: '', content: '', method: 'post' });
+    });
 });
