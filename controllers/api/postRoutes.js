@@ -71,4 +71,34 @@ router.get('/:id', async (req, res) => {
   res.json(post);
 });
 
+// DELETE route for deleting a post by ID
+router.delete('/:id', withAuth, async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    // Find the post by ID and ensure it belongs to the authenticated user
+    const post = await Post.findOne({
+      where: {
+        id: postId,
+        user_id: req.session.user_id
+      }
+    });
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found or unauthorized' });
+    }
+
+    // Delete the post from the database
+    await Post.destroy({
+      where: {
+        id: postId
+      }
+    });
+
+    res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    res.status(500).json({ message: 'Error deleting the post' });
+  }
+});
 module.exports = router;

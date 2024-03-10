@@ -56,9 +56,30 @@ const addPostHandler = async (event) => {
     }
   }
 };
+const deletePostHandler = async (postId) => {
+  // Send a DELETE request to the API endpoint
+  try {
+    const response = await fetch(`/api/posts/${postId}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      // If successful, reload the page or update UI as needed
+      document.location.reload();
+    } else {
+      // Handle deletion failure, for example, display an error message
+      const errorData = await response.json();
+      console.error('Deletion failed:', errorData.message);
+    }
+  } catch (error) {
+    console.error('Error during deletion:', error);
+  }
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   const updatePostModal = document.getElementById('update-post-modal');
   const saveChangesBtn = document.getElementById('save-changes-btn');
+  const closeButton = document.getElementById('close-btn');
 
   let currentPostId = null;
 
@@ -72,14 +93,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Show the modal
     updatePostModal.style.display = 'block';
-    saveChangesBtn.onclick = addPostHandler;
+    // Handle Save Changes button click
+    saveChangesBtn.onclick = function () {
+      // Check the method and call the appropriate handler
+      if (post.method === 'post') {
+        addPostHandler();
+      } else {
+        saveChanges();
+      }
+
+      // After saving, hide the modal
+      closeModal();
+    };
   }
+
+  //saveChangesBtn.onclick = addPostHandler;
 
   function closeModal() {
     // Close the modal
     updatePostModal.style.display = 'none';
     currentPostId = null;
   }
+
+  // Handle Delete button click using event delegation
+  document.addEventListener('click', async function (event) {
+    if (event.target.classList.contains('delete-post-btn')) {
+      const postId = event.target.dataset.postid;
+
+      if (confirm('Are you sure you want to delete this post?')) {
+        deletePostHandler(postId);
+      }
+    }
+  });
 
   // Handle Edit button click using event delegation
   document.addEventListener('click', async function (event) {
@@ -108,10 +153,14 @@ document.addEventListener('DOMContentLoaded', function () {
     closeModal();
   });
 
- 
+  // Handle close button click
+  closeButton.addEventListener('click', closeModal);
+
+  // Handle Create Post button click
   document
     .getElementById('create-post-text')
     .addEventListener('click', function () {
       openModal({ title: '', content: '', method: 'post' });
     });
 });
+
