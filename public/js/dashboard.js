@@ -1,3 +1,4 @@
+
 const saveChanges = async (event) => {
   event.preventDefault();
 
@@ -27,6 +28,7 @@ const saveChanges = async (event) => {
     }
   }
 };
+
 const addPostHandler = async (event) => {
   event.preventDefault();
 
@@ -56,6 +58,7 @@ const addPostHandler = async (event) => {
     }
   }
 };
+
 const deletePostHandler = async (postId) => {
   // Send a DELETE request to the API endpoint
   try {
@@ -93,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Show the modal
     updatePostModal.style.display = 'block';
+
     // Handle Save Changes button click
     saveChangesBtn.onclick = function () {
       // Check the method and call the appropriate handler
@@ -106,8 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
       closeModal();
     };
   }
-
-  //saveChangesBtn.onclick = addPostHandler;
 
   function closeModal() {
     // Close the modal
@@ -163,4 +165,3 @@ document.addEventListener('DOMContentLoaded', function () {
       openModal({ title: '', content: '', method: 'post' });
     });
 });
-
