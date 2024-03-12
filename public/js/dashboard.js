@@ -1,34 +1,34 @@
-
 const saveChanges = async (event) => {
   event.preventDefault();
 
-  // Collect values from the login form
-  const title = document.getElementById('post-title').value.trim();
-  const content = document.getElementById('post-content').value.trim();
+  document.addEventListener('DOMContentLoaded', function () {
+    // Collect values from the login form
+    const title = document.querySelector('post-title').innerText.trim();
+    const content = document.querySelector('post-content').value.trim();
 
-  if (title && content) {
-    // Send a POST request to the API endpoint
-    try {
-      const response = await fetch('/api/post', {
-        method: 'POST',
-        body: JSON.stringify({ title, content }),
-        headers: { 'Content-Type': 'application/json' },
-      });
+    if (title && content) {
+      // Send a POST request to the API endpoint
+      try {
+        const response = fetch('/api/post', {
+          method: 'POST',
+          body: JSON.stringify({ title, content }),
+          headers: { 'Content-Type': 'application/json' },
+        });
 
-      if (response.ok) {
-        // If successful, redirect the browser to the homepage
-        document.location.replace('/');
-      } else {
-        // Handle login failure, for example, display an error message
-        const errorData = await response.json();
-        console.error('Login failed:', errorData.message);
+        if (response.ok) {
+          // If successful, redirect the browser to the homepage
+          document.location.replace('/');
+        } else {
+          // Handle login failure, for example, display an error message
+          const errorData = response.json();
+          console.error('Login failed:', errorData.message);
+        }
+      } catch (error) {
+        console.error('Error during login:', error);
       }
-    } catch (error) {
-      console.error('Error during login:', error);
     }
-  }
+  });
 };
-
 const addPostHandler = async (event) => {
   event.preventDefault();
 
@@ -78,7 +78,6 @@ const deletePostHandler = async (postId) => {
     console.error('Error during deletion:', error);
   }
 };
-
 document.addEventListener('DOMContentLoaded', function () {
   const updatePostModal = document.getElementById('update-post-modal');
   const saveChangesBtn = document.getElementById('save-changes-btn');
@@ -86,6 +85,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let currentPostId = null;
 
+  function closeModal() {
+    // Close the modal
+    updatePostModal.style.display = 'none';
+    currentPostId = null;
+  }
   function openModal(post) {
     const titleInput = document.getElementById('update-post-title');
     const contentInput = document.getElementById('update-post-content');
@@ -98,25 +102,17 @@ document.addEventListener('DOMContentLoaded', function () {
     updatePostModal.style.display = 'block';
 
     // Handle Save Changes button click
-    saveChangesBtn.onclick = function () {
+    saveChangesBtn.onclick = function (event) {
       // Check the method and call the appropriate handler
       if (post.method === 'post') {
         addPostHandler();
       } else {
         saveChanges();
       }
-
       // After saving, hide the modal
       closeModal();
     };
   }
-
-  function closeModal() {
-    // Close the modal
-    updatePostModal.style.display = 'none';
-    currentPostId = null;
-  }
-
   // Handle Delete button click using event delegation
   document.addEventListener('click', async function (event) {
     if (event.target.classList.contains('delete-post-btn')) {
@@ -127,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   });
-
   // Handle Edit button click using event delegation
   document.addEventListener('click', async function (event) {
     if (event.target.classList.contains('edit-post-btn')) {
@@ -148,16 +143,13 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   });
-
   // Handle Save Changes button click
-  saveChangesBtn.addEventListener('click', function () {
+  saveChangesBtn.addEventListener('click', function (event) {
     // After saving, hide the modal
     closeModal();
   });
-
   // Handle close button click
   closeButton.addEventListener('click', closeModal);
-
   // Handle Create Post button click
   document
     .getElementById('create-post-text')
