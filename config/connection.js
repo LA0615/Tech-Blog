@@ -1,7 +1,9 @@
 // Imports the Sequelize library
 const Sequelize = require('sequelize');
+
 // Utilizes the 'dotenv' package in order to load the .env file.
 require('dotenv').config();
+
 
 let sequelize;
 if (process.env.JAWSDB_URL) {

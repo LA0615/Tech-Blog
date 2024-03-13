@@ -1,33 +1,32 @@
-const saveChanges = async (event) => {
+const saveChanges = async (event, postId) => {
   event.preventDefault();
+  console.log('Help me');
+  // Collect values from the login form
+  const title = document.getElementById('update-post-title').value.trim();
+  const content = document.getElementById('update-post-content').value.trim();
+  console.log(title);
+  console.log(content);
+  if (title && content) {
+    // Send a POST request to the API endpoint
+    try {
+      const response = await fetch(`/api/posts/${postId}`, {
+        method: 'PUT',
+        body: JSON.stringify({ title, content }),
+        headers: { 'Content-Type': 'application/json' },
+      });
 
-  document.addEventListener('DOMContentLoaded', function () {
-    // Collect values from the login form
-    const title = document.querySelector('post-title').innerText.trim();
-    const content = document.querySelector('post-content').value.trim();
-
-    if (title && content) {
-      // Send a POST request to the API endpoint
-      try {
-        const response = fetch('/api/post', {
-          method: 'POST',
-          body: JSON.stringify({ title, content }),
-          headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (response.ok) {
-          // If successful, redirect the browser to the homepage
-          document.location.replace('/');
-        } else {
-          // Handle login failure, for example, display an error message
-          const errorData = response.json();
-          console.error('Login failed:', errorData.message);
-        }
-      } catch (error) {
-        console.error('Error during login:', error);
+      if (response.ok) {
+        // If successful, redirect the browser to the homepage
+        document.location.replace('/dashboard');
+      } else {
+        // Handle login failure, for example, display an error message
+        const errorData = await response.json();
+        console.error('Login failed:', errorData.message);
       }
+    } catch (error) {
+      console.error('Error during login:', error);
     }
-  });
+  }
 };
 const addPostHandler = async (event) => {
   event.preventDefault();
@@ -90,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updatePostModal.style.display = 'none';
     currentPostId = null;
   }
-  function openModal(post) {
+  function openModal(post, response) {
     const titleInput = document.getElementById('update-post-title');
     const contentInput = document.getElementById('update-post-content');
 
@@ -104,10 +103,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle Save Changes button click
     saveChangesBtn.onclick = function (event) {
       // Check the method and call the appropriate handler
-      if (post.method === 'post') {
-        addPostHandler();
+      if (response.method === 'POST') {
+        addPostHandler(event);
       } else {
-        saveChanges();
+        saveChanges(event, post.id);
       }
       // After saving, hide the modal
       closeModal();
@@ -137,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error(`Failed to fetch post data: ${response.statusText}`);
         }
 
-        openModal(post);
+        openModal(post, response);
       } catch (error) {
         console.error('Error fetching post data:', error);
       }
