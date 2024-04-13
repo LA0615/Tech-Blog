@@ -14,3 +14,5 @@ Please click the link to the application and view the screenshot below.
 Click the link for application. 
 
 [Link deployed application] (https://git.heroku.com/salty-garden-28553.git)
+
+[Link to deployed Github app] (https://la0615.github.io/Tech-Blog/)
